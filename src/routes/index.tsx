@@ -55,7 +55,8 @@ export const Route = createFileRoute("/")({
 
 /* ------------------------------- Data ---------------------------------- */
 
-const nav = [
+type NavItem = { icon: typeof LayoutDashboard; name: string; active?: boolean; badge?: number };
+const nav: { label: string; items: NavItem[] }[] = [
   {
     label: "Main",
     items: [
