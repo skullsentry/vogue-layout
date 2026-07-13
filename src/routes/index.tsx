@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   Area,
   AreaChart,
@@ -47,6 +47,8 @@ import {
   CircleCheck,
   CircleMinus,
   Zap,
+  Sun,
+  Moon,
 } from "lucide-react";
 
 export const Route = createFileRoute("/")({
