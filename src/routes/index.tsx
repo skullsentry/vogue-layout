@@ -219,6 +219,7 @@ function Topbar() {
         <button className="hidden sm:flex items-center gap-2 h-10 px-3 rounded-xl border border-border bg-card/60 text-sm hover:border-primary/50 transition">
           <Store size={15} className="text-primary-glow" /> Store Admin
         </button>
+        <ThemeToggle />
         <button className="hidden sm:flex items-center gap-2 h-10 px-3 rounded-xl border border-border bg-card/60 text-sm hover:border-primary/50 transition">
           <Globe size={15} /> EN
         </button>
@@ -229,6 +230,43 @@ function Topbar() {
         <div className="h-10 w-10 rounded-xl grid place-items-center font-bold text-primary-foreground text-sm shadow-[var(--shadow-glow)]" style={{ background: "var(--gradient-primary)" }}>HK</div>
       </div>
     </header>
+  );
+}
+
+function ThemeToggle() {
+  const [theme, setTheme] = useState<"dark" | "light">("dark");
+  useEffect(() => {
+    const saved = (typeof localStorage !== "undefined" && localStorage.getItem("theme")) as
+      | "dark"
+      | "light"
+      | null;
+    const initial = saved ?? "dark";
+    setTheme(initial);
+    document.documentElement.classList.toggle("light", initial === "light");
+  }, []);
+  const toggle = () => {
+    const next = theme === "dark" ? "light" : "dark";
+    setTheme(next);
+    document.documentElement.classList.toggle("light", next === "light");
+    try { localStorage.setItem("theme", next); } catch {}
+  };
+  const isLight = theme === "light";
+  return (
+    <button
+      onClick={toggle}
+      aria-label="Toggle theme"
+      className="relative h-10 w-[68px] rounded-xl border border-border bg-card/60 hover:border-primary/50 transition flex items-center px-1"
+    >
+      <span
+        className="absolute top-1 h-8 w-8 rounded-lg shadow-[var(--shadow-glow)] transition-all duration-300"
+        style={{
+          left: isLight ? "calc(100% - 36px)" : "4px",
+          background: "var(--gradient-primary)",
+        }}
+      />
+      <Sun size={14} className={`relative z-10 mx-1.5 transition ${isLight ? "text-primary-foreground" : "text-muted-foreground"}`} />
+      <Moon size={14} className={`relative z-10 mx-1.5 ml-auto transition ${!isLight ? "text-primary-foreground" : "text-muted-foreground"}`} />
+    </button>
   );
 }
 
