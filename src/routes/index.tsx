@@ -249,6 +249,8 @@ function GradientIcon({ Icon, grad, size = 44 }: { Icon: React.ComponentType<{ s
 /* ------------------------------ Layout --------------------------------- */
 
 function Sidebar() {
+  const [openMenu, setOpenMenu] = useState<string | null>("Business Control");
+  const [activeChild, setActiveChild] = useState<string>("Overview");
   return (
     <aside className="hidden lg:flex flex-col w-[264px] shrink-0 h-screen sticky top-0 border-r border-border bg-sidebar/70 backdrop-blur-xl">
       <div className="flex items-center gap-3 px-5 pt-6 pb-5">
@@ -267,24 +269,72 @@ function Sidebar() {
             <div className="px-3 mb-2 text-[10px] tracking-[0.18em] font-semibold text-muted-foreground uppercase">{sec.label}</div>
             {sec.items.map((it) => {
               const Icon = it.icon;
+              const isOpen = openMenu === it.name;
+              const isActive = isOpen || it.active;
               return (
-                <button
-                  key={it.name}
-                  className={`w-full flex items-center gap-3 px-3 py-2.5 mb-1 rounded-xl text-sm font-medium transition-all group ${
-                    it.active
-                      ? "text-foreground shadow-[var(--shadow-md)]"
-                      : "text-muted-foreground hover:text-foreground hover:bg-sidebar-accent/60"
-                  }`}
-                  style={it.active ? { background: "linear-gradient(135deg, oklch(0.7 0.19 285 / 0.22), oklch(0.72 0.18 320 / 0.12))", borderLeft: "2px solid oklch(0.7 0.19 285)" } : undefined}
-                >
-                  <Icon size={17} className={it.active ? "text-primary-glow" : ""} />
-                  <span className="flex-1 text-left">{it.name}</span>
-                  {it.badge ? (
-                    <span className="text-[10px] font-bold px-2 py-0.5 rounded-full text-white" style={{ background: "var(--gradient-sunset)" }}>{it.badge}</span>
-                  ) : (
-                    <ChevronRight size={14} className="opacity-40 group-hover:opacity-80 transition" />
+                <div key={it.name} className="mb-1">
+                  <button
+                    onClick={() => setOpenMenu(isOpen ? null : it.name)}
+                    aria-expanded={isOpen}
+                    className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all group ${
+                      isActive
+                        ? "text-foreground shadow-[var(--shadow-md)]"
+                        : "text-muted-foreground hover:text-foreground hover:bg-sidebar-accent/60"
+                    }`}
+                    style={isActive ? { background: "linear-gradient(135deg, oklch(0.7 0.19 285 / 0.22), oklch(0.72 0.18 320 / 0.12))", borderLeft: "2px solid oklch(0.7 0.19 285)" } : undefined}
+                  >
+                    <Icon size={17} className={isActive ? "text-primary-glow" : ""} />
+                    <span className="flex-1 text-left">{it.name}</span>
+                    {it.badge ? (
+                      <span className="text-[10px] font-bold px-2 py-0.5 rounded-full text-white" style={{ background: "var(--gradient-sunset)" }}>{it.badge}</span>
+                    ) : (
+                      <ChevronRight
+                        size={14}
+                        className={`opacity-40 group-hover:opacity-80 transition-transform ${isOpen ? "rotate-90 opacity-90" : ""}`}
+                      />
+                    )}
+                  </button>
+                  {it.children && (
+                    <div
+                      className="grid transition-all duration-300 ease-out"
+                      style={{
+                        gridTemplateRows: isOpen ? "1fr" : "0fr",
+                        opacity: isOpen ? 1 : 0,
+                      }}
+                    >
+                      <div className="overflow-hidden">
+                        <div className="mt-1 ml-4 pl-3 border-l border-border/60 flex flex-col gap-0.5 py-1">
+                          {it.children.map((c) => {
+                            const active = isOpen && activeChild === c.name;
+                            return (
+                              <button
+                                key={c.name}
+                                onClick={() => setActiveChild(c.name)}
+                                className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-[12.5px] transition-all ${
+                                  active
+                                    ? "text-foreground bg-sidebar-accent/70 font-semibold"
+                                    : "text-muted-foreground hover:text-foreground hover:bg-sidebar-accent/40"
+                                }`}
+                              >
+                                <span
+                                  className={`h-1.5 w-1.5 rounded-full transition ${
+                                    active ? "bg-primary-glow shadow-[0_0_8px_var(--primary-glow,theme(colors.primary.DEFAULT))]" : "bg-border"
+                                  }`}
+                                />
+                                <span className="flex-1 text-left">{c.name}</span>
+                                {c.badge ? (
+                                  <span className="text-[9px] font-bold px-1.5 py-0.5 rounded-full text-white" style={{ background: "var(--gradient-sunset)" }}>
+                                    {c.badge}
+                                  </span>
+                                ) : null}
+                              </button>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    </div>
                   )}
-                </button>
+                </div>
               );
             })}
           </div>
@@ -344,6 +394,14 @@ function ThemeToggle() {
     const initial = saved ?? "dark";
     setTheme(initial);
     document.documentElement.classList.toggle("light", initial === "light");
+    const onStorage = (e: StorageEvent) => {
+      if (e.key !== "theme" || !e.newValue) return;
+      const next = e.newValue === "light" ? "light" : "dark";
+      setTheme(next);
+      document.documentElement.classList.toggle("light", next === "light");
+    };
+    window.addEventListener("storage", onStorage);
+    return () => window.removeEventListener("storage", onStorage);
   }, []);
   const toggle = () => {
     const next = theme === "dark" ? "light" : "dark";
