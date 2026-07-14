@@ -57,32 +57,133 @@ export const Route = createFileRoute("/")({
 
 /* ------------------------------- Data ---------------------------------- */
 
-type NavItem = { icon: typeof LayoutDashboard; name: string; active?: boolean; badge?: number };
+type NavItem = {
+  icon: typeof LayoutDashboard;
+  name: string;
+  active?: boolean;
+  badge?: number;
+  children?: { name: string; badge?: number }[];
+};
 const nav: { label: string; items: NavItem[] }[] = [
   {
     label: "Main",
     items: [
-      { icon: LayoutDashboard, name: "Business Control", active: true },
-      { icon: Boxes, name: "Product Setup" },
-      { icon: Warehouse, name: "Warehouses" },
-      { icon: Truck, name: "Purchases" },
+      {
+        icon: LayoutDashboard,
+        name: "Business Control",
+        active: true,
+        children: [
+          { name: "Overview" },
+          { name: "Live Activity" },
+          { name: "Daybook" },
+        ],
+      },
+      {
+        icon: Boxes,
+        name: "Product Setup",
+        children: [
+          { name: "All Products" },
+          { name: "Categories" },
+          { name: "Units & Variants" },
+          { name: "Pricing Rules" },
+        ],
+      },
+      {
+        icon: Warehouse,
+        name: "Warehouses",
+        children: [
+          { name: "Locations" },
+          { name: "Stock Transfer" },
+          { name: "Stock Adjustment" },
+        ],
+      },
+      {
+        icon: Truck,
+        name: "Purchases",
+        children: [
+          { name: "New Purchase" },
+          { name: "Purchase History" },
+          { name: "Purchase Returns" },
+        ],
+      },
     ],
   },
   {
     label: "Finance",
     items: [
-      { icon: ReceiptText, name: "Sales & Billing" },
-      { icon: BookUser, name: "Ledgers & Profiles" },
-      { icon: BookOpenText, name: "Finance Book" },
+      {
+        icon: ReceiptText,
+        name: "Sales & Billing",
+        children: [
+          { name: "New Invoice" },
+          { name: "Invoice History" },
+          { name: "Sales Returns" },
+          { name: "Quotations" },
+        ],
+      },
+      {
+        icon: BookUser,
+        name: "Ledgers & Profiles",
+        children: [
+          { name: "Customers" },
+          { name: "Suppliers" },
+          { name: "Account Groups" },
+        ],
+      },
+      {
+        icon: BookOpenText,
+        name: "Finance Book",
+        children: [
+          { name: "Cash Book" },
+          { name: "Bank Book" },
+          { name: "Expenses" },
+          { name: "Journal Entries" },
+        ],
+      },
     ],
   },
   {
     label: "Operations",
     items: [
-      { icon: Users, name: "Personnel & HR" },
-      { icon: BarChart3, name: "Reports Hub" },
-      { icon: AlertTriangle, name: "Low Stock", badge: 6 },
-      { icon: Settings, name: "Shop Settings" },
+      {
+        icon: Users,
+        name: "Personnel & HR",
+        children: [
+          { name: "Employees" },
+          { name: "Attendance" },
+          { name: "Payroll" },
+        ],
+      },
+      {
+        icon: BarChart3,
+        name: "Reports Hub",
+        children: [
+          { name: "Sales Reports" },
+          { name: "Purchase Reports" },
+          { name: "Inventory Reports" },
+          { name: "Profit & Loss" },
+        ],
+      },
+      {
+        icon: AlertTriangle,
+        name: "Low Stock",
+        badge: 6,
+        children: [
+          { name: "Reorder List", badge: 6 },
+          { name: "Out of Stock" },
+          { name: "Reorder Rules" },
+        ],
+      },
+      {
+        icon: Settings,
+        name: "Shop Settings",
+        children: [
+          { name: "Profile" },
+          { name: "Users & Roles" },
+          { name: "Preferences" },
+          { name: "Backups" },
+        ],
+      },
     ],
   },
 ];
