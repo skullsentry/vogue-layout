@@ -84,6 +84,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:description", content: "Modern trading & inventory control panel with real-time cash flow, stock alerts and sales insights." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Insaf Trading — Business Control Dashboard" },
+      { name: "twitter:description", content: "Modern trading & inventory control panel with real-time cash flow, stock alerts and sales insights." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/2359a753-17a2-454e-b224-4749c7a9ca27/id-preview-fc9bcbd4--c9fe7f35-3c00-4780-8a8d-820e1e19d043.lovable.app-1784018465074.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/2359a753-17a2-454e-b224-4749c7a9ca27/id-preview-fc9bcbd4--c9fe7f35-3c00-4780-8a8d-820e1e19d043.lovable.app-1784018465074.png" },
     ],
     links: [
       {
