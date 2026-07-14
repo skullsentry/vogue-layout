@@ -482,6 +482,25 @@ const chartData = [
 function Dashboard() {
   const [range, setRange] = useState<"1M" | "3M" | "6M" | "1Y">("6M");
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
+  useEffect(() => {
+    if (typeof localStorage === "undefined") return;
+    const saved = localStorage.getItem("mobile-nav-open");
+    if (saved === "true") setMobileNavOpen(true);
+    const onStorage = (e: StorageEvent) => {
+      if (e.key === "mobile-nav-open") {
+        setMobileNavOpen(e.newValue === "true");
+      }
+    };
+    window.addEventListener("storage", onStorage);
+    return () => window.removeEventListener("storage", onStorage);
+  }, []);
+  const setMobileNavOpenPersisted = (next: boolean | ((prev: boolean) => boolean)) => {
+    setMobileNavOpen((prev) => {
+      const value = typeof next === "function" ? next(prev) : next;
+      try { localStorage.setItem("mobile-nav-open", String(value)); } catch {}
+      return value;
+    });
+  };
   const totals = useMemo(() => {
     const rev = chartData.reduce((s, d) => s + d.rev, 0);
     const exp = chartData.reduce((s, d) => s + d.exp, 0);
@@ -490,9 +509,9 @@ function Dashboard() {
 
   return (
     <div className="flex min-h-screen text-foreground">
-      <Sidebar mobileOpen={mobileNavOpen} onClose={() => setMobileNavOpen(false)} />
+      <Sidebar mobileOpen={mobileNavOpen} onClose={() => setMobileNavOpenPersisted(false)} />
       <main className="flex-1 min-w-0">
-        <Topbar onMenuClick={() => setMobileNavOpen(true)} />
+        <Topbar onMenuClick={() => setMobileNavOpenPersisted(true)} />
 
         <div className="p-6 space-y-8">
           {/* HERO */}
