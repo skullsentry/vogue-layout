@@ -49,6 +49,8 @@ import {
   Zap,
   Sun,
   Moon,
+  Menu,
+  X,
 } from "lucide-react";
 
 export const Route = createFileRoute("/")({
