@@ -482,6 +482,25 @@ const chartData = [
 function Dashboard() {
   const [range, setRange] = useState<"1M" | "3M" | "6M" | "1Y">("6M");
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
+  useEffect(() => {
+    if (typeof localStorage === "undefined") return;
+    const saved = localStorage.getItem("mobile-nav-open");
+    if (saved === "true") setMobileNavOpen(true);
+    const onStorage = (e: StorageEvent) => {
+      if (e.key === "mobile-nav-open") {
+        setMobileNavOpen(e.newValue === "true");
+      }
+    };
+    window.addEventListener("storage", onStorage);
+    return () => window.removeEventListener("storage", onStorage);
+  }, []);
+  const setMobileNavOpenPersisted = (next: boolean | ((prev: boolean) => boolean)) => {
+    setMobileNavOpen((prev) => {
+      const value = typeof next === "function" ? next(prev) : next;
+      try { localStorage.setItem("mobile-nav-open", String(value)); } catch {}
+      return value;
+    });
+  };
   const totals = useMemo(() => {
     const rev = chartData.reduce((s, d) => s + d.rev, 0);
     const exp = chartData.reduce((s, d) => s + d.exp, 0);
