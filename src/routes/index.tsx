@@ -509,9 +509,9 @@ function Dashboard() {
 
   return (
     <div className="flex min-h-screen text-foreground">
-      <Sidebar mobileOpen={mobileNavOpen} onClose={() => setMobileNavOpen(false)} />
+      <Sidebar mobileOpen={mobileNavOpen} onClose={() => setMobileNavOpenPersisted(false)} />
       <main className="flex-1 min-w-0">
-        <Topbar onMenuClick={() => setMobileNavOpen(true)} />
+        <Topbar onMenuClick={() => setMobileNavOpenPersisted(true)} />
 
         <div className="p-6 space-y-8">
           {/* HERO */}
