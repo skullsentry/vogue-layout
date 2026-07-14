@@ -49,6 +49,8 @@ import {
   Zap,
   Sun,
   Moon,
+  Menu,
+  X,
 } from "lucide-react";
 
 export const Route = createFileRoute("/")({
@@ -248,11 +250,36 @@ function GradientIcon({ Icon, grad, size = 44 }: { Icon: React.ComponentType<{ s
 
 /* ------------------------------ Layout --------------------------------- */
 
-function Sidebar() {
+function Sidebar({ mobileOpen, onClose }: { mobileOpen: boolean; onClose: () => void }) {
   const [openMenu, setOpenMenu] = useState<string | null>("Business Control");
   const [activeChild, setActiveChild] = useState<string>("Overview");
+  useEffect(() => {
+    document.body.style.overflow = mobileOpen ? "hidden" : "";
+    return () => { document.body.style.overflow = ""; };
+  }, [mobileOpen]);
   return (
-    <aside className="hidden lg:flex flex-col w-[264px] shrink-0 h-screen sticky top-0 border-r border-border bg-sidebar/70 backdrop-blur-xl">
+    <>
+      {/* Mobile overlay */}
+      <div
+        onClick={onClose}
+        aria-hidden
+        className={`lg:hidden fixed inset-0 z-40 bg-background/70 backdrop-blur-sm transition-opacity duration-300 ${
+          mobileOpen ? "opacity-100" : "opacity-0 pointer-events-none"
+        }`}
+      />
+      <aside
+        className={`flex flex-col w-[280px] lg:w-[264px] shrink-0 h-screen border-r border-border bg-sidebar/95 lg:bg-sidebar/70 backdrop-blur-xl
+          fixed z-50 top-0 left-0 transition-transform duration-300 ease-out
+          lg:sticky lg:translate-x-0
+          ${mobileOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}`}
+      >
+        <button
+          onClick={onClose}
+          aria-label="Close menu"
+          className="lg:hidden absolute top-4 right-4 h-9 w-9 grid place-items-center rounded-xl border border-border bg-card/60 text-muted-foreground hover:text-foreground"
+        >
+          <X size={16} />
+        </button>
       <div className="flex items-center gap-3 px-5 pt-6 pb-5">
         <div className="h-11 w-11 rounded-2xl grid place-items-center text-primary-foreground shadow-[var(--shadow-glow)]" style={{ background: "var(--gradient-primary)" }}>
           <Sparkles size={20} />
@@ -309,7 +336,7 @@ function Sidebar() {
                             return (
                               <button
                                 key={c.name}
-                                onClick={() => setActiveChild(c.name)}
+                                onClick={() => { setActiveChild(c.name); onClose(); }}
                                 className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-[12.5px] transition-all ${
                                   active
                                     ? "text-foreground bg-sidebar-accent/70 font-semibold"
@@ -349,17 +376,25 @@ function Sidebar() {
         </div>
         <button className="h-8 w-8 rounded-lg grid place-items-center text-muted-foreground hover:text-destructive hover:bg-destructive/10 transition"><LogOut size={15} /></button>
       </div>
-    </aside>
+      </aside>
+    </>
   );
 }
 
-function Topbar() {
+function Topbar({ onMenuClick }: { onMenuClick: () => void }) {
   return (
     <header className="sticky top-0 z-30 backdrop-blur-xl bg-background/60 border-b border-border">
-      <div className="flex items-center gap-3 px-6 h-[72px]">
-        <div>
-          <h1 className="text-xl font-bold">Dashboard</h1>
-          <p className="text-[11px] text-muted-foreground">Insaf Trading Company › General › <span className="text-foreground font-semibold">Overview</span></p>
+      <div className="flex items-center gap-3 px-4 sm:px-6 h-[72px]">
+        <button
+          onClick={onMenuClick}
+          aria-label="Open menu"
+          className="lg:hidden h-10 w-10 grid place-items-center rounded-xl border border-border bg-card/60 text-foreground hover:border-primary/50 transition shrink-0"
+        >
+          <Menu size={18} />
+        </button>
+        <div className="min-w-0">
+          <h1 className="text-lg sm:text-xl font-bold truncate">Dashboard</h1>
+          <p className="text-[11px] text-muted-foreground truncate hidden sm:block">Insaf Trading Company › General › <span className="text-foreground font-semibold">Overview</span></p>
         </div>
         <div className="flex-1" />
         <div className="hidden md:flex items-center gap-2 h-10 px-3 rounded-xl border border-border bg-card/60 w-[280px]">
@@ -378,7 +413,7 @@ function Topbar() {
           <Bell size={16} />
           <span className="absolute top-2 right-2 h-2 w-2 rounded-full bg-destructive animate-[pulse-ring_1.8s_ease-out_infinite]" />
         </button>
-        <div className="h-10 w-10 rounded-xl grid place-items-center font-bold text-primary-foreground text-sm shadow-[var(--shadow-glow)]" style={{ background: "var(--gradient-primary)" }}>HK</div>
+        <div className="h-10 w-10 shrink-0 rounded-xl grid place-items-center font-bold text-primary-foreground text-sm shadow-[var(--shadow-glow)]" style={{ background: "var(--gradient-primary)" }}>HK</div>
       </div>
     </header>
   );
@@ -446,6 +481,7 @@ const chartData = [
 
 function Dashboard() {
   const [range, setRange] = useState<"1M" | "3M" | "6M" | "1Y">("6M");
+  const [mobileNavOpen, setMobileNavOpen] = useState(false);
   const totals = useMemo(() => {
     const rev = chartData.reduce((s, d) => s + d.rev, 0);
     const exp = chartData.reduce((s, d) => s + d.exp, 0);
@@ -454,9 +490,9 @@ function Dashboard() {
 
   return (
     <div className="flex min-h-screen text-foreground">
-      <Sidebar />
+      <Sidebar mobileOpen={mobileNavOpen} onClose={() => setMobileNavOpen(false)} />
       <main className="flex-1 min-w-0">
-        <Topbar />
+        <Topbar onMenuClick={() => setMobileNavOpen(true)} />
 
         <div className="p-6 space-y-8">
           {/* HERO */}
