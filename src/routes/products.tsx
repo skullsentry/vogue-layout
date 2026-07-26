@@ -112,7 +112,7 @@ function ProductsPage() {
         </div>
 
         <div className="overflow-x-auto -mx-2">
-          <table className="w-full text-sm min-w-[900px]">
+          <table className="w-full text-sm min-w-[1080px]">
             <thead>
               <tr className="text-left text-[10px] tracking-wider text-muted-foreground uppercase">
                 <th className="font-semibold px-3 py-3">SKU Code</th>
@@ -120,9 +120,9 @@ function ProductsPage() {
                 <th className="font-semibold px-3 py-3">Category</th>
                 <th className="font-semibold px-3 py-3">Cost Price</th>
                 <th className="font-semibold px-3 py-3">Retail Price</th>
-                <th className="font-semibold px-3 py-3 text-center">Shelf</th>
-                <th className="font-semibold px-3 py-3 text-center">Warehouse</th>
-                <th className="font-semibold px-3 py-3 text-center">Min Alert</th>
+                <th className="font-semibold px-3 py-3 text-center whitespace-nowrap">Shelf Stock</th>
+                <th className="font-semibold px-3 py-3 text-center whitespace-nowrap">Warehouse</th>
+                <th className="font-semibold px-3 py-3 text-center whitespace-nowrap">Min Alert</th>
                 <th className="font-semibold px-3 py-3">Status</th>
                 <th className="font-semibold px-3 py-3 text-right">Actions</th>
               </tr>
