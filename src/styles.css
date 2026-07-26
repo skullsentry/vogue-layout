@@ -92,7 +92,7 @@
 }
 
 .light {
-  --background: oklch(0.985 0.005 260);
+  --background: oklch(1 0 0);
   --foreground: oklch(0.22 0.03 275);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.22 0.03 275);
@@ -118,9 +118,9 @@
 
   --gradient-primary: linear-gradient(135deg, oklch(0.62 0.22 295), oklch(0.72 0.2 330));
   --gradient-accent: linear-gradient(135deg, oklch(0.72 0.18 195), oklch(0.76 0.17 165));
-  --gradient-surface: linear-gradient(160deg, oklch(1 0 0), oklch(0.97 0.015 275));
-  --gradient-glow: radial-gradient(1200px 600px at 10% -10%, oklch(0.7 0.22 300 / 0.18), transparent 60%),
-                   radial-gradient(900px 500px at 100% 0%, oklch(0.75 0.18 200 / 0.14), transparent 60%);
+  --gradient-surface: linear-gradient(160deg, oklch(1 0 0), oklch(0.99 0.003 275));
+  --gradient-glow: radial-gradient(1400px 700px at 15% -20%, oklch(0.7 0.22 300 / 0.05), transparent 65%),
+                   radial-gradient(1000px 600px at 100% 0%, oklch(0.75 0.18 200 / 0.04), transparent 65%);
 
   --shadow-sm: 0 2px 8px oklch(0.3 0.05 275 / 0.08);
   --shadow-md: 0 10px 30px oklch(0.3 0.05 275 / 0.12);
