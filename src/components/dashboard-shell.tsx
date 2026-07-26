@@ -142,11 +142,14 @@ function Sidebar({ mobileOpen, onClose }: { mobileOpen: boolean; onClose: () => 
                             {it.children.map((c) => {
                               const active = c.to === pathname;
                               const cls = `flex items-center gap-2 px-3 py-1.5 rounded-lg text-[12.5px] transition-all ${
-                                active ? "text-foreground bg-sidebar-accent/70 font-semibold" : "text-muted-foreground hover:text-foreground hover:bg-sidebar-accent/40"
+                                active ? "text-primary-foreground font-semibold shadow-[var(--shadow-glow)]" : "text-muted-foreground hover:text-foreground hover:bg-sidebar-accent/40"
                               }`;
+                              const activeStyle = active
+                                ? { background: "linear-gradient(135deg, oklch(0.7 0.19 285), oklch(0.72 0.18 320))" }
+                                : undefined;
                               const inner = (
                                 <>
-                                  <span className={`h-1.5 w-1.5 rounded-full transition ${active ? "bg-primary-glow" : "bg-border"}`} style={active ? { boxShadow: "0 0 8px oklch(0.78 0.17 310)" } : undefined} />
+                                  <span className={`h-1.5 w-1.5 rounded-full transition ${active ? "bg-white" : "bg-border"}`} style={active ? { boxShadow: "0 0 8px oklch(1 0 0 / 0.8)" } : undefined} />
                                   <span className="flex-1 text-left">{c.name}</span>
                                   {c.badge ? (
                                     <span className="text-[9px] font-bold px-1.5 py-0.5 rounded-full text-white" style={{ background: "var(--gradient-sunset)" }}>{c.badge}</span>
@@ -154,9 +157,9 @@ function Sidebar({ mobileOpen, onClose }: { mobileOpen: boolean; onClose: () => 
                                 </>
                               );
                               return c.to ? (
-                                <Link key={c.name} to={c.to} onClick={onClose} className={cls}>{inner}</Link>
+                                <Link key={c.name} to={c.to} onClick={onClose} className={cls} style={activeStyle}>{inner}</Link>
                               ) : (
-                                <button key={c.name} onClick={onClose} className={cls}>{inner}</button>
+                                <button key={c.name} onClick={onClose} className={cls} style={activeStyle}>{inner}</button>
                               );
                             })}
                           </div>
