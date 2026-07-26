@@ -533,13 +533,17 @@ function Dashboard() {
               </div>
               <div className="grid grid-cols-3 gap-3 md:gap-6">
                 {[
-                  { l: "Revenue", v: "Rs 40.8K", g: "var(--gradient-primary)" },
-                  { l: "Net Cash", v: "Rs 13K", g: "var(--gradient-mint)" },
-                  { l: "Orders", v: "128", g: "var(--gradient-cool)" },
+                  { l: "Revenue", v: "Rs 101.6K", g: "var(--gradient-primary)" },
+                  { l: "Net Cash", v: "Rs -20,200", g: "var(--gradient-sunset)", negative: true },
+                  { l: "Orders", v: "8", g: "var(--gradient-cool)" },
                 ].map((s) => (
                   <div key={s.l} className="min-w-[100px] rounded-2xl p-4 border border-border bg-card/40">
                     <p className="text-[10px] tracking-widest text-muted-foreground uppercase">{s.l}</p>
-                    <p className="text-xl md:text-2xl font-bold mt-1" style={{ backgroundImage: s.g, WebkitBackgroundClip: "text", backgroundClip: "text", color: "transparent" }}>{s.v}</p>
+                    <p className="text-xl md:text-2xl font-bold mt-1" style={
+                      "negative" in s && s.negative
+                        ? { color: "oklch(0.68 0.22 20)" }
+                        : { backgroundImage: s.g, WebkitBackgroundClip: "text", backgroundClip: "text", color: "transparent" }
+                    }>{s.v}</p>
                   </div>
                 ))}
               </div>
