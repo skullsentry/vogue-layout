@@ -179,13 +179,16 @@
 .kpi-card .text-muted-foreground { color: oklch(0.42 0.02 265) !important; }
 .kpi-card p, .kpi-card span, .kpi-card h3, .kpi-card h4 { color: inherit; }
 :root.light .kpi-card {
-  background:
-    linear-gradient(135deg, oklch(1 0 0 / 1), oklch(1 0 0 / 0.92) 60%, oklch(0.98 0.01 260 / 0.9)),
-    #ffffff;
-  border-color: oklch(0.92 0.01 260);
+  background: #ffffff;
+  border-color: #ffffff;
   box-shadow:
-    0 1px 0 0 #ffffff inset,
-    0 12px 30px -18px oklch(0.2 0.05 265 / 0.25);
+    0 2px 0 0 #ffffff inset,
+    0 0 0 1px oklch(0.98 0.005 265),
+    0 18px 40px -18px oklch(0.25 0.08 270 / 0.35),
+    0 8px 20px -10px oklch(0.7 0.15 285 / 0.18);
+}
+:root.light .kpi-card .text-muted-foreground {
+  color: oklch(0.45 0.02 265) !important;
 }
 @utility hover-lift {
   &:hover {
