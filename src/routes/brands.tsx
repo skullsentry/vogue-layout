@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Building2, Plus, Download, Printer, Trash2, Factory } from "lucide-react";
+import { Building2, Plus, Download, Printer, Trash2, Factory, Package, Award, Boxes, TrendingUp } from "lucide-react";
 import { useState } from "react";
 import { DashboardShell, PageHeader } from "@/components/dashboard-shell";
 
@@ -13,10 +13,22 @@ export const Route = createFileRoute("/brands")({
   }),
 });
 
-const initial = [{ id: 1, name: "Nestle" }];
+const initial = [
+  { id: 1, name: "Nestle" },
+  { id: 2, name: "Lays" },
+  { id: 3, name: "Rocket" },
+  { id: 4, name: "Mothercare" },
+];
 const gradients = [
   "var(--gradient-primary)", "var(--gradient-accent)", "var(--gradient-cool)",
   "var(--gradient-mint)", "var(--gradient-sunset)", "var(--gradient-gold)", "var(--gradient-rose)",
+];
+
+const kpis = [
+  { label: "Registered Brands", value: "4", sub: "Active manufacturers", icon: Award, grad: "var(--gradient-primary)" },
+  { label: "Top Brand", value: "Nestle", sub: "By product count", icon: TrendingUp, grad: "var(--gradient-gold)" },
+  { label: "Products Branded", value: "11", sub: "Across all brands", icon: Package, grad: "var(--gradient-cool)" },
+  { label: "Unbranded Items", value: "0", sub: "Products without brand", icon: Boxes, grad: "var(--gradient-mint)" },
 ];
 
 function BrandsPage() {
@@ -25,6 +37,23 @@ function BrandsPage() {
   return (
     <DashboardShell title="Brands & Companies" crumb={<>Product Setup › <span className="text-foreground font-semibold">Brands & Companies</span></>}>
       <PageHeader title="Brands & Companies Setup" subtitle="Register manufacturing companies and product brands you carry in your catalog." icon={Building2} grad="var(--gradient-cool)" />
+
+      <section className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        {kpis.map((k) => {
+          const Icon = k.icon;
+          return (
+            <div key={k.label} className="glass-card hover-lift p-5 relative overflow-hidden">
+              <div className="absolute -right-6 -top-6 h-24 w-24 rounded-full opacity-25 blur-2xl" style={{ background: k.grad }} />
+              <div className="h-11 w-11 rounded-2xl grid place-items-center text-primary-foreground shadow-[0_8px_24px_-6px_oklch(0_0_0/0.5)]" style={{ background: k.grad }}>
+                <Icon size={20} />
+              </div>
+              <p className="text-[11px] tracking-wider uppercase text-muted-foreground mt-4">{k.label}</p>
+              <p className="text-2xl font-bold mt-1">{k.value}</p>
+              <p className="text-xs text-muted-foreground mt-1">{k.sub}</p>
+            </div>
+          );
+        })}
+      </section>
 
       <section className="grid grid-cols-1 lg:grid-cols-[1fr_2fr] gap-5">
         <div className="glass-card p-6 h-fit">
