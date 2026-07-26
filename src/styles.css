@@ -162,6 +162,28 @@
   backdrop-filter: blur(12px);
   transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }
+@utility kpi-card {
+  background:
+    linear-gradient(135deg, oklch(1 0 0 / 0.22), oklch(1 0 0 / 0.10) 55%, oklch(1 0 0 / 0.06)),
+    oklch(1 0 0 / 0.14);
+  border: 1px solid oklch(1 0 0 / 0.28);
+  border-radius: var(--radius-xl);
+  box-shadow:
+    0 1px 0 0 oklch(1 0 0 / 0.35) inset,
+    0 -1px 0 0 oklch(1 0 0 / 0.05) inset,
+    var(--shadow-lg);
+  backdrop-filter: blur(18px) saturate(140%);
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+:root.light .kpi-card {
+  background:
+    linear-gradient(135deg, oklch(1 0 0 / 1), oklch(1 0 0 / 0.92) 60%, oklch(0.98 0.01 260 / 0.9)),
+    #ffffff;
+  border-color: oklch(0.92 0.01 260);
+  box-shadow:
+    0 1px 0 0 #ffffff inset,
+    0 12px 30px -18px oklch(0.2 0.05 265 / 0.25);
+}
 @utility hover-lift {
   &:hover {
     transform: translateY(-3px);

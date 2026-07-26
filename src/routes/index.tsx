@@ -589,7 +589,7 @@ function Dashboard() {
                 const Icon = k.icon;
                 const TrendIcon = k.up ? ArrowUpRight : ArrowDownRight;
                 return (
-                  <div key={k.label} className="glass-card hover-lift p-5 relative overflow-hidden">
+                  <div key={k.label} className="kpi-card hover-lift p-5 relative overflow-hidden">
                     <div className="absolute -right-6 -top-6 h-24 w-24 rounded-full opacity-20 blur-2xl" style={{ background: k.grad }} />
                     <div className="flex items-start justify-between relative">
                       <GradientIcon Icon={Icon} grad={k.grad} size={42} />

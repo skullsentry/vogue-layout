@@ -72,7 +72,7 @@ function ProductsPage() {
         {kpis.map((k) => {
           const Icon = k.icon;
           return (
-            <div key={k.label} className="glass-card hover-lift p-5 relative overflow-hidden">
+            <div key={k.label} className="kpi-card hover-lift p-5 relative overflow-hidden">
               <div className="absolute -right-6 -top-6 h-24 w-24 rounded-full opacity-25 blur-2xl" style={{ background: k.grad }} />
               <div className="flex items-start justify-between relative">
                 <div className="h-11 w-11 rounded-2xl grid place-items-center text-primary-foreground shadow-[0_8px_24px_-6px_oklch(0_0_0/0.5)]" style={{ background: k.grad }}>
