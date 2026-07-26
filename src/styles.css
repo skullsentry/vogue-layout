@@ -164,17 +164,20 @@
 }
 @utility kpi-card {
   background:
-    linear-gradient(135deg, oklch(1 0 0 / 0.22), oklch(1 0 0 / 0.10) 55%, oklch(1 0 0 / 0.06)),
-    oklch(1 0 0 / 0.14);
-  border: 1px solid oklch(1 0 0 / 0.28);
+    linear-gradient(140deg, oklch(1 0 0 / 0.95), oklch(0.98 0.005 260 / 0.86) 55%, oklch(0.96 0.01 265 / 0.78));
+  border: 1px solid oklch(1 0 0 / 0.6);
+  color: oklch(0.18 0.03 265);
   border-radius: var(--radius-xl);
   box-shadow:
-    0 1px 0 0 oklch(1 0 0 / 0.35) inset,
-    0 -1px 0 0 oklch(1 0 0 / 0.05) inset,
-    var(--shadow-lg);
+    0 1px 0 0 #ffffff inset,
+    0 -1px 0 0 oklch(0.85 0.02 265 / 0.4) inset,
+    0 20px 40px -20px oklch(0.1 0.04 265 / 0.55),
+    0 0 0 1px oklch(1 0 0 / 0.05);
   backdrop-filter: blur(18px) saturate(140%);
   transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }
+.kpi-card .text-muted-foreground { color: oklch(0.42 0.02 265) !important; }
+.kpi-card p, .kpi-card span, .kpi-card h3, .kpi-card h4 { color: inherit; }
 :root.light .kpi-card {
   background:
     linear-gradient(135deg, oklch(1 0 0 / 1), oklch(1 0 0 / 0.92) 60%, oklch(0.98 0.01 260 / 0.9)),
